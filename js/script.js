@@ -103,6 +103,15 @@ for (const child of buttons) {
     } else if (buttonValue === "%") {
       currentInput = currentInput / 100;
       updateDisplays();
+    } else if (buttonValue === "²√x") {
+      currentInput = Math.sqrt(currentInput);
+      updateDisplays();
+    } else if (buttonValue === "x²") {
+      currentInput = Math.pow(currentInput, 2);
+      updateDisplays();
+    } else if (buttonValue === "1/x") {
+      currentInput = 1 / currentInput;
+      updateDisplays();
     }
 
     if (buttonValue === "=") {
