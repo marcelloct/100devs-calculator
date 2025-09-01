@@ -58,10 +58,10 @@ function updateDisplays() {
 }
 
 function clear() {
-  currentInput = 0;
+  currentInput = "";
   previousInput = "";
   operator = null;
-  display.value = currentInput;
+  display.value = 0;
   typing.value = "";
 }
 
@@ -74,24 +74,13 @@ for (const child of buttons) {
     // if (buttonValue >= 0 || buttonValue <= 9) {
     //   display.value += buttonValue;
     // }
-    // if (buttonID === "C") {
-    //   display.value = 0;
-    // } else if (buttonID === "erase" && display.value !== "0") {
-    //   display.value = display.value.slice(0, -1);
-    // }
-    if (buttonID === "C") {
-      clear();
-    }
-
-    if (display.value.slice(0) === 0) {
-      display.value = "";
-    }
     ////////////////////////////////////////////////////
     if (!isNaN(buttonValue)) {
       currentInput = handleNumber(buttonValue);
       updateDisplays();
     }
 
+    // Handling with non numeric buttons
     if (
       buttonValue === "-" ||
       buttonValue === "+" ||
@@ -112,26 +101,27 @@ for (const child of buttons) {
     } else if (buttonValue === "1/x") {
       currentInput = 1 / currentInput;
       updateDisplays();
-    }
-
-    if (buttonValue === "=") {
+    } else if (buttonValue === "C") {
+      clear();
+    } else if (buttonValue === "=") {
       currentInput = calculate();
       updateDisplays();
 
       // display.typing += previousInput;
       // display.value = currentInput;
+    } else if (buttonID === "erase" && currentInput != 0) {
+      currentInput = currentInput.slice(0, -1);
+      updateDisplays();
+      console.log(display.value);
+      if (currentInput == "") {
+        display.value = 0;
+      }
     }
 
     if (buttonID === "pos-neg") {
       console.log("pos-neg");
     }
   });
-
-  // if (buttonID === "C") {
-  //   child.addEventListener("click", function () {
-  //     display.value = 0;
-  //   });
-  // }
 }
 
 ///////////////////////////////////////////////////////
