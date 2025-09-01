@@ -116,10 +116,14 @@ for (const child of buttons) {
       if (currentInput == "") {
         display.value = 0;
       }
-    }
-
-    if (buttonID === "pos-neg") {
-      console.log("pos-neg");
+    } else if (buttonID === "pos-neg") {
+      if (display.value != 0 && display.value == display.value) {
+        currentInput = -currentInput;
+        updateDisplays();
+      }
+    } else if (buttonValue === ".") {
+      currentInput += ".";
+      updateDisplays();
     }
   });
 }
@@ -166,18 +170,7 @@ for (const child of buttons) {
 //         A = display.value;
 //         display.value = "";
 //       }
-//     } else if (topSymbols.includes(value)) {
-//       if  (value === "+/-") {
-//         if (display.value != "" && display.value != "0") {
-//           if (display.value[0] == "-") {
-//             // remove -
-//             display.value = display.value.slice(1);
-//           } else {
-//             display.value = "-" + display.value;
-//           }
-//         }
-//       }
-//     } else {
+//     }  else {
 //       // numbers or .
 //       if (value === ".") {
 //         if (display.value != "" && !display.value.includes(value)) {
