@@ -46,6 +46,7 @@ function calculate() {
       console.log(result);
       break;
     default:
+      return (display.value = currentInput);
       console.log("error");
   }
   // console.log(+(previousInput + operator + currentInput));
@@ -56,16 +57,20 @@ function updateDisplays() {
   typing.value = previousInput;
 }
 
+function clear() {
+  currentInput = 0;
+  previousInput = "";
+  operator = null;
+  display.value = currentInput;
+  typing.value = "";
+}
+
 // Get the id of each button
 for (const child of buttons) {
   let buttonID = child.id;
   let buttonValue = child.innerText;
   // console.log(child.tagName.id);
   child.addEventListener("click", function () {
-    // Just show the numbers in display
-    // if (display.value.slice(0) === "0") {
-    //   display.value = "";
-    // }
     // if (buttonValue >= 0 || buttonValue <= 9) {
     //   display.value += buttonValue;
     // }
@@ -74,6 +79,13 @@ for (const child of buttons) {
     // } else if (buttonID === "erase" && display.value !== "0") {
     //   display.value = display.value.slice(0, -1);
     // }
+    if (buttonID === "C") {
+      clear();
+    }
+
+    if (display.value.slice(0) === 0) {
+      display.value = "";
+    }
     ////////////////////////////////////////////////////
     if (!isNaN(buttonValue)) {
       currentInput = handleNumber(buttonValue);
@@ -81,13 +93,16 @@ for (const child of buttons) {
     }
 
     if (
-      (isNaN(buttonValue) && buttonValue === "+") ||
       buttonValue === "-" ||
+      buttonValue === "+" ||
       buttonValue === "x" ||
       buttonValue === "÷"
     ) {
       typing.value = currentInput;
       handleOperator(buttonValue);
+    } else if (buttonValue === "%") {
+      currentInput = currentInput / 100;
+      updateDisplays();
     }
 
     if (buttonValue === "=") {
@@ -96,6 +111,10 @@ for (const child of buttons) {
 
       // display.typing += previousInput;
       // display.value = currentInput;
+    }
+
+    if (buttonID === "pos-neg") {
+      console.log("pos-neg");
     }
   });
 
@@ -149,10 +168,7 @@ for (const child of buttons) {
 //         display.value = "";
 //       }
 //     } else if (topSymbols.includes(value)) {
-//       if (value === "AC") {
-//         clearAll();
-//         display.value = "";
-//       } else if (value === "+/-") {
+//       if  (value === "+/-") {
 //         if (display.value != "" && display.value != "0") {
 //           if (display.value[0] == "-") {
 //             // remove -
@@ -161,8 +177,6 @@ for (const child of buttons) {
 //             display.value = "-" + display.value;
 //           }
 //         }
-//       } else if (value === "%") {
-//         display.value = Number(display.value) / 100;
 //       }
 //     } else {
 //       // numbers or .
