@@ -17,6 +17,13 @@ function handleNumber(num) {
 
 // stores currentInput into previousInput, saves op, clears currentInput.
 function handleOperator(op) {
+  // Chaining Operations
+  if (previousInput != "" && operator != null) {
+    previousInput = calculate();
+    console.log(previousInput);
+    currentInput = previousInput;
+    updateDisplays();
+  }
   typing.value = currentInput + op;
   previousInput = currentInput;
   operator = op;
