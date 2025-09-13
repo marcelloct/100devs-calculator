@@ -11,7 +11,7 @@ const buttons = document.querySelector("#buttons").children;
 
 // appends digits to currentInput.
 function handleNumber(num) {
-  return (currentInput += num);
+  return Number((currentInput += num));
   console.log(currentInput);
 }
 
@@ -65,11 +65,9 @@ function updateDisplays() {
 }
 
 function clear() {
-  currentInput = "";
+  currentInput = 0;
   previousInput = "";
   operator = null;
-  display.value = 0;
-  typing.value = "";
 }
 
 // Get the id of each button
@@ -110,14 +108,17 @@ for (const child of buttons) {
       updateDisplays();
     } else if (buttonValue === "C") {
       clear();
+      updateDisplays();
     } else if (buttonValue === "=") {
       currentInput = calculate();
       updateDisplays();
+      operator = null;
+      previousInput = "";
 
       // display.typing += previousInput;
       // display.value = currentInput;
     } else if (buttonID === "erase" && currentInput != 0) {
-      currentInput = currentInput.slice(0, -1);
+      currentInput = currentInput.toString().slice(0, -1);
       updateDisplays();
       console.log(display.value);
       if (currentInput == "") {
@@ -199,3 +200,17 @@ for (const child of buttons) {
 // make the operation when other operation occurs number is
 
 // BONUS: when operator is added display in typing
+
+// function handleOperator(op) {
+//   // Chaining Operations
+//   if (previousInput == "") {
+//     previousInput = currentInput;
+//     console.log(previousInput);
+//     updateDisplays();
+//   }
+//   previousInput = calculate();
+//   operator = op;
+//   currentInput = "";
+
+//   console.log(previousInput, operator, currentInput);
+// }
