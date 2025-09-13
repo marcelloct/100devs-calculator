@@ -2,48 +2,78 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  background: #303030;
+  font-family: Arial, sans-serif;
 }
 
-#calculator {
-  background-color: #1c1c1c;
-  width: 400px;
-  max-width: 400px;
-  padding: 60px 5px 0 5px;
+.calculator {
+  background: #222;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-#display {
-  background: #1c1c1c;
-  color: #fff;
+.display {
+  display: flex;
+  justify-content: flex-end;
+  align-items: last baseline;
+  background: #000;
+  color: #0f0;
+  font-size: 2em;
   text-align: right;
-  font-size: 90px;
-  border: none;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  height: 50px;
+  overflow: hidden;
 }
 
-#buttons {
+.buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  padding: 8px;
+  grid-template-columns: repeat(4, 70px);
+  grid-gap: 10px;
 }
 
-#buttons button {
-  background-color: #505050;
-  color: #fff;
-  font-size: 36px;
-  text-align: center;
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
+button {
+  padding: 20px;
+  font-size: 1.2em;
   border: none;
+  border-radius: 8px;
+  background: #444;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-#buttons button:hover {
-  opacity: 70%;
+.bigger-btn {
+  grid-column: span 2;
 }
 
-#buttons button:active {
-  opacity: 90%;
+button:hover {
+  background: #666;
+}
+
+.operator {
+  background: #ff9500;
+}
+
+.operator:hover {
+  background: #e68900;
+}
+
+.equal {
+  background: #28a745;
+}
+
+.equal:hover {
+  background: #218838;
+}
+
+.clear {
+  background: #dc3545;
+}
+
+.clear:hover {
+  background: #c82333;
 }
