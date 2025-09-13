@@ -1,115 +1,126 @@
-const buttonValues = [
-  "AC",
-  "+/-",
-  "%",
-  "/",
-  "7",
-  "8",
-  "9",
-  "*",
-  "4",
-  "5",
-  "6",
-  "-",
-  "1",
-  "2",
-  "3",
-  "+",
-  "0",
-  ".",
-  "=",
-];
-const rightSymbols = ["/", "*", "-", "+", "="];
-const topSymbols = ["AC", "+/-", "%"];
+// Default Variables
+let currentInput = "";
+let previousInput = "";
+let operator = null;
 
 const display = document.querySelector("#display");
 
-//A+B, A*B, A-B, A/B
-let A = 0;
-let operator = null;
-let B = null;
+function updateDisplay(value) {
+  if (value !== undefined) {
+    display.textContent = value;
+  } else if (currentInput !== "") {
+    display.textContent = currentInput;
+  } else if (previousInput !== "") {
+    display.textContent = previousInput;
+  } else {
+    display.textContent = "0";
+  }
+}
+
+function handleNumber(num) {
+  currentInput += num;
+  updateDisplay();
+}
+
+function handleOperator(op) {
+  if (currentInput === "" && previousInput === "") return;
+
+  if (previousInput && operator && currentInput) {
+    calculate(); // calculate() leaves result in currentInput (or "Error")
+    if (currentInput === "Error") {
+      // abort chaining on error
+      previousInput = "";
+      operator = null;
+      return;
+    }
+    previousInput = currentInput;
+  } else if (currentInput) {
+    previousInput = currentInput;
+  }
+  currentInput = "";
+  operator = op;
+}
+
+function calculate() {
+  if (!previousInput || !operator || !currentInput) return;
+
+  const prev = parseFloat(previousInput);
+  const curr = parseFloat(currentInput);
+  let result = 0;
+
+  switch (operator) {
+    case "+":
+      result = prev + curr;
+      break;
+    case "-":
+      result = prev - curr;
+      break;
+    case "*":
+      result = prev * curr;
+      break;
+    case "/":
+      result = curr === 0 ? "Error" : prev / curr;
+      break;
+  }
+
+  currentInput = String(result);
+  previousInput = "";
+  operator = null;
+  updateDisplay();
+}
 
 function clearAll() {
-  A = 0;
+  currentInput = "";
+  previousInput = "";
   operator = null;
-  B = null;
+  updateDisplay("0");
 }
 
-for (let i = 0; i < buttonValues.length; i++) {
-  let value = buttonValues[i];
-  let button = document.createElement("button");
-  button.innerText = value;
-
-  // styling button colors
-  if (value === "0") {
-    button.style.width = "200px";
-    button.style.gridColumn = "span 2";
+function backspace() {
+  if (currentInput.length > 0) {
+    currentInput = currentInput.toString().slice(0, -1);
   }
-  if (rightSymbols.includes(value)) {
-    button.style.backgroundColor = "#FF9500";
-  } else if (topSymbols.includes(value)) {
-    button.style.backgroundColor = "#D4D4D2";
-    button.style.color = "#1C1C1C";
-  }
-
-  // process button clicks
-  button.addEventListener("click", function () {
-    if (rightSymbols.includes(value)) {
-      if (value === "=") {
-        if (A != null) {
-          B = display.value;
-          let numA = Number(A);
-          let numB = Number(B);
-
-          if (operator === "/") {
-            display.value = numA / numB;
-            if (display.value === "Infinity") {
-              display.value = "Not possible divide by zero";
-            }
-          } else if (operator === "*") {
-            display.value = numA * numB;
-          } else if (operator === "+") {
-            display.value = numA + numB;
-          } else if (operator === "-") {
-            display.value = numA - numB;
-          }
-          clearAll();
-        }
-      } else {
-        operator = value;
-        A = display.value;
-        display.value = "";
-      }
-    } else if (topSymbols.includes(value)) {
-      if (value === "AC") {
-        clearAll();
-        display.value = "";
-      } else if (value === "+/-") {
-        if (display.value != "" && display.value != "0") {
-          if (display.value[0] == "-") {
-            // remove -
-            display.value = display.value.slice(1);
-          } else {
-            display.value = "-" + display.value;
-          }
-        }
-      } else if (value === "%") {
-        display.value = Number(display.value) / 100;
-      }
-    } else {
-      // numbers or .
-      if (value === ".") {
-        if (display.value != "" && !display.value.includes(value)) {
-          display.value += value;
-        }
-      } else if (display.value === "0") {
-        display.value = value;
-      } else {
-        display.value += value;
-      }
-    }
-  });
-
-  // add buttons to calculator
-  document.getElementById("buttons").appendChild(button);
+  updateDisplay();
 }
+
+function addDecimal() {
+  if (!currentInput.includes(".")) {
+    currentInput = currentInput === "" ? "0." : currentInput + ".";
+  }
+  updateDisplay();
+}
+
+// Events
+document.querySelectorAll("[data-num]").forEach((btn) => {
+  btn.addEventListener("click", () => handleNumber(btn.dataset.num));
+});
+
+document.querySelectorAll("[data-op]").forEach((btn) => {
+  btn.addEventListener("click", () => handleOperator(btn.dataset.op));
+});
+
+document.getElementById("equals").addEventListener("click", calculate);
+document.getElementById("clear").addEventListener("click", clearAll);
+document.getElementById("backspace").addEventListener("click", backspace);
+document.getElementById("decimal").addEventListener("click", addDecimal);
+
+// Keyboard support
+document.addEventListener("keydown", (e) => {
+  if (!isNaN(e.key)) {
+    handleNumber(e.key);
+  } else if (["+", "-", "*", "/"].includes(e.key)) {
+    handleOperator(e.key);
+  } else if (e.key === "Enter" || e.key === "=") {
+    e.preventDefault();
+    calculate();
+  } else if (e.key === "Backspace") {
+    backspace();
+  } else if (e.key === "Escape") {
+    clearAll();
+  } else if (e.key === ".") {
+    addDecimal();
+  }
+});
+
+// Initialize
+updateDisplay("0");
