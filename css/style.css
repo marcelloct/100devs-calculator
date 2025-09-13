@@ -2,7 +2,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #303030;
+  background-color: #2b2b2b;
   height: 100dvh;
   overflow: hidden;
 }
@@ -35,7 +35,7 @@ body {
 #buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 6px;
   padding: 8px;
 }
 
@@ -45,7 +45,7 @@ body {
   font-size: 24px;
   text-align: center;
   padding: 16px 12px;
-  border-radius: 8px;
+  border-radius: 4px;
   border: none;
 }
 
