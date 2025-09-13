@@ -106,7 +106,7 @@ for (const child of buttons) {
     } else if (buttonValue === "1/x") {
       currentInput = 1 / currentInput;
       updateDisplays();
-    } else if (buttonValue === "C") {
+    } else if (buttonValue === "C" || buttonValue === "CE") {
       clear();
       updateDisplays();
     } else if (buttonValue === "=") {
@@ -135,82 +135,3 @@ for (const child of buttons) {
     }
   });
 }
-
-///////////////////////////////////////////////////////
-// //A+B, A*B, A-B, A/B
-// let A = 0;
-// let operator = null;
-// let B = null;
-
-// function clearAll() {
-//   A = 0;
-//   operator = null;
-//   B = null;
-// }
-
-// for (let i = 0; i < buttonValues.length; i++) {
-
-//   // process button clicks
-//   button.addEventListener("click", function () {
-//     if (rightSymbols.includes(value)) {
-//       if (value === "=") {
-//         if (A != null) {
-//           B = display.value;
-//           let numA = Number(A);
-//           let numB = Number(B);
-
-//           if (operator === "/") {
-//             display.value = numA / numB;
-//             if (display.value === "Infinity") {
-//               display.value = "Not possible divide by zero";
-//             }
-//           } else if (operator === "*") {
-//             display.value = numA * numB;
-//           } else if (operator === "+") {
-//             display.value = numA + numB;
-//           } else if (operator === "-") {
-//             display.value = numA - numB;
-//           }
-//           clearAll();
-//         }
-//       } else {
-//         operator = value;
-//         A = display.value;
-//         display.value = "";
-//       }
-//     }  else {
-//       // numbers or .
-//       if (value === ".") {
-//         if (display.value != "" && !display.value.includes(value)) {
-//           display.value += value;
-//         }
-//       } else if (display.value === "0") {
-//         display.value = value;
-//       } else {
-//         display.value += value;
-//       }
-//     }
-//   });
-
-// }
-
-// Pseudo-Code
-// display 0 by default
-// display number clicked by the User
-// make the operation when other operation occurs number is
-
-// BONUS: when operator is added display in typing
-
-// function handleOperator(op) {
-//   // Chaining Operations
-//   if (previousInput == "") {
-//     previousInput = currentInput;
-//     console.log(previousInput);
-//     updateDisplays();
-//   }
-//   previousInput = calculate();
-//   operator = op;
-//   currentInput = "";
-
-//   console.log(previousInput, operator, currentInput);
-// }
