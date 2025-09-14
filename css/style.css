@@ -19,7 +19,7 @@ body {
   justify-content: flex-end;
   align-items: last baseline;
   background: #000;
-  color: #0f0;
+  color: rgb(243, 243, 243);
   font-size: 2em;
   text-align: right;
   padding: 10px;
@@ -46,12 +46,12 @@ button {
   transition: background 0.2s;
 }
 
-.bigger-btn {
-  grid-column: span 2;
-}
-
 button:hover {
   background: #666;
+}
+
+.op-btn {
+  background: #575757;
 }
 
 .operator {
