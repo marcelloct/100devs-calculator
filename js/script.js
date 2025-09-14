@@ -90,6 +90,41 @@ function addDecimal() {
   updateDisplay();
 }
 
+function percentage() {
+  if (!currentInput) return;
+
+  currentInput = String(currentInput / 100);
+  updateDisplay();
+}
+
+function fraction() {
+  if (!currentInput) return;
+
+  currentInput = String(1 / currentInput);
+  updateDisplay();
+}
+
+function exponent() {
+  if (!currentInput) return;
+
+  currentInput = String(Math.pow(currentInput, 2));
+  updateDisplay();
+}
+
+function square() {
+  if (!currentInput) return;
+
+  currentInput = String(Math.sqrt(currentInput));
+  updateDisplay();
+}
+
+function convertToNegative() {
+  if (currentInput !== 0 && currentInput === currentInput) {
+    currentInput = String(-currentInput);
+    updateDisplay();
+  }
+}
+
 // Events
 document.querySelectorAll("[data-num]").forEach((btn) => {
   btn.addEventListener("click", () => handleNumber(btn.dataset.num));
@@ -101,8 +136,14 @@ document.querySelectorAll("[data-op]").forEach((btn) => {
 
 document.getElementById("equals").addEventListener("click", calculate);
 document.getElementById("clear").addEventListener("click", clearAll);
+document.getElementById("CE").addEventListener("click", clearAll);
 document.getElementById("backspace").addEventListener("click", backspace);
 document.getElementById("decimal").addEventListener("click", addDecimal);
+document.getElementById("percentage").addEventListener("click", percentage);
+document.getElementById("fraction").addEventListener("click", percentage);
+document.getElementById("square").addEventListener("click", square);
+document.getElementById("exponent").addEventListener("click", exponent);
+document.getElementById("pos-neg").addEventListener("click", convertToNegative);
 
 // Keyboard support
 document.addEventListener("keydown", (e) => {
